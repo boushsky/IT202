@@ -1,0 +1,33 @@
+ <html>
+  <head>
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+ 
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ 
+ 
+    
+    
+    
+  </head>
+
+  <body>
+      
+      <h1>Results</h1>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $.get("https://data.cityofchicago.org/resource/cwig-ma7x.json?$query=SELECT%20DISTINCT%20results", 
+          function (response) {
+            $.each(response, function(i,v) {
+              $("#ends").append("<option>" + v.results + "</option>");
+
+            })
+        });
+      })
+    </script>
+    <!--Div that will hold the pie chart-->
+    <input list="ends">
+    <datalist id="ends">
+    </datalist>
+  </body>
+</html>
