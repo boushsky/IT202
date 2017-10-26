@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="500"></canvas>
+        
+        <img style= "display: none;" id="player" width="50" height="50" src="https://www.hurricanes.co.nz/fileadmin/user_upload/01_img_hero_player_generic.png" alt="The Scream">
+        
+        <script>
+            var score=0, life=10;
+            var rightPressed = false;
+            var leftPressed = false;
+            
+            //var player={x:200, y:450,color:"blue", radius: 20,  shape:"circle"};
+            var harm={x:100, y:80,color:"red",radius:30, shape:"circle"};
+            var bene={x:200, y:80,color:"green", radius:30, shape:"circle"};
+            var player={x:200, y:450,height: 50, width: 50,shape:"image"};
+            
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+            
+            document.addEventListener("keydown", keyDownHandler, false);
+            document.addEventListener("keyup", keyUpHandler, false);
+            
+            function draw () {
+	        // update character position properties
+	            ctx.clearRect(0,0,c.width,c.height);
+	            harm.y++;
+	            bene.y++;
+	        
+            if (areColliding(player,harm)) {
+        	    //  set properties
+        	    life--;
+        	    harm.x = Math.random()*c.width;
+            	harm.y = 80;
+        	    
+            }
+            
+            if (areColliding(player,bene)) {
+            	//  set properties
+            	score++;
+            
+            	bene.x = Math.random()*c.width;
+            	bene.y = 80;
+            	
+            }
+            
+            if (reachedEdge(harm, 'bottom')) {
+	            // set y property
+	            harm.y -= 450;
+	            harm.x = Math.random()*c.width-harm.radius;
+	            if(harm.x<harm.radius){
+	                harm.x = harm.radius;
+	            }
+            }
+            
+            if (reachedEdge(bene, 'bottom')) {
+	            // set y property
+	            bene.y -= 450;
+	            bene.x = Math.random()*c.width-bene.radius;
+	            if(bene.x<bene.radius){
+	                bene.x = bene.radius;
+	            }
+            }
+            
+
+            drawCharacter(player);
+            drawCharacter(harm);
+            drawCharacter(bene);
+            //drawCharacter(img);
+            drawBoard();
+            
+            if(rightPressed && (player.x < (c.width - player.width))) {
+                
+                player.x += 2;
+            }
+            else if(leftPressed && player.x > (1/2*player.width)) {
+                player.x -= 2;
+            }
+            
+            if(life>0){
+             requestAnimationFrame(draw);
+            }
+            else{
+                console.log(gameover());
+                gameover();
+            }
+}
+
+        function drawCharacter (character) {
+            switch (character.shape) {
+		        case 'circle' :
+			        drawCircle(character.x, character.y, character.radius, character.color);
+			        break;
+                case 'square' :
+		            // call function to draw square
+		            drawSquare(character.x, character.y, character.halfLength, character.color)
+		            break;
+                case 'image' :
+		            // call function to draw image
+		            drawImage(character.x, character.y, character.height, character.width);
+		        break;
+	        default: 
+		        console.log('character.shape case fell through');	
+}	
+}  
+        function drawCircle (x, y, radius, color) {
+	        console.log();
+	        ctx.beginPath();
+            ctx.arc(x,y,radius,0,2*Math.PI);
+            ctx.fillStyle=color;
+            ctx.fill();
+        }
+        function drawSquare(x,y,halfLength,color){
+            console.log();
+            ctx.rect(x,y,40,40);
+            ctx.fillStyle=color;
+            ctx.fill();
+        }
+        
+        function drawImage(x,y,height,width){
+                var img = document.getElementById("player");
+                ctx.drawImage(img, x, y,height,width);
+        }
+        
+        function drawBoard() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("Score: "+score, 8, 20);
+            ctx.fillText("Life point: "+life, 8, 35);
+        }
+        
+        function gameover(){
+            ctx.font = "50px Arial";
+            ctx.fillStyle = "Red";
+            ctx.fillText("Game Over!!",180,250);
+        }
+        
+        
+        function areColliding(character1,character2) {
+	        // use 2d collision for circles
+	        var areColliding = false;
+	        var dx = character1.x +0.5*character1.width - character2.x;
+            var dy = character1.y +0.5*character1.height - character2.y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < character1.height + character2.radius) {
+                // collision detected!
+                areColliding = true;
+            }
+            return areColliding;
+        }
+        function reachedEdge(character, edge) {
+            var reachedEdge = false;
+	        if (edge == 'bottom' && character.y>c.height)
+		        reachedEdge=true;
+	        return reachedEdge;
+        }
+        
+        function keyDownHandler(e) {
+            if(e.keyCode == 39) {
+                rightPressed = true;
+            }
+            else if(e.keyCode == 37) {
+                leftPressed = true;
+            }
+        }
+
+        function keyUpHandler(e) {
+         if(e.keyCode == 39) {
+              rightPressed = false;
+            }
+         else if(e.keyCode == 37) {
+             leftPressed = false;
+            }
+        }
+        
+        
+        
+        $(document).ready(function() {
+	        // arrow key keydown event handlers to change player position
+	        requestAnimationFrame(draw);
+        });
+
+
+        </script>
+    </body>
+</html>

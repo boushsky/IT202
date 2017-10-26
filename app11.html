@@ -1,0 +1,20 @@
+<html>
+    <head>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+     
+        
+    </head>
+    <body>
+        <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+
+       <script>
+        var db = new Dexie("MyDB");
+        db.version(1).stores({settings: "name,value"});
+        db.on("populate", function() {
+    db.settings.add({name:displayName, value: "Display name"});
+    db.settings.add({name:shareLocationData, value: false });
+    db.settings.add({name:lastAccessed: "now"});
+        db.open();
+        </script>
+    </body>
+</html>
