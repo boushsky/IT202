@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="500"></canvas>
+        
+        <script>
+            //var score=0, life_point=10;
+            var player={x:50, y:250,color:"blue", shape:"circle"};
+            var harm={x:150, y:150,color:"red", shape:"circle"};
+            var bene={x:150, y:250,color:"green", shape:"circle"};
+            
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+            
+            function draw () {
+	        // update character position properties
+	            ctx.clearRect(0,0,c.width,c.height);
+	            harm.x--;
+	            bene.x--;
+	
+            if (areColliding(player,harm)) {
+        	//  set properties
+            }
+            if (areColliding(player,bene)) {
+            	//  set properties
+            }
+            if (reachedEdge(harm, 'left')) {
+	            // set y property
+	            harm.x+= c.width;
+            }
+
+            drawCharacter(player);
+            drawCharacter(harm);
+            drawCharacter(bene);
+            requestAnimationFrame(draw);
+}
+
+        function drawCharacter (character) {
+            switch (character.shape) {
+		        case 'circle' :
+			        drawCircle(character.x, character.y, character.radius, character.color);
+			        break;
+                case 'square' :
+		            // call function to draw square
+		            break;
+                case 'image' :
+		        // call function to draw image
+		        break;
+	        default: 
+		        console.log('character.shape case fell through');	
+}	
+}  
+        function drawCircle (x, y, radius, color) {
+	        console.log();
+	        ctx.beginPath();
+            ctx.arc(x,y,40,0,2*Math.PI);
+            ctx.fillStyle=color;
+            ctx.fill();
+        }
+        function areColliding(character1,character2) {
+	// use 2d collision for circles
+        }
+        function reachedEdge(character, edge) {
+            var reachedEdge = false;
+	        if (edge == 'left' && character.y<0)
+		        reachedEdge==true;
+		    console.log(edge);
+	        return reachedEdge;
+        }
+        $(document).ready(function() {
+	        // arrow key keydown event handlers to change player position
+	        requestAnimationFrame(draw);
+        });
+
+
+
+
+
+        </script>
+    </body>
+</html>
