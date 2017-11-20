@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+        
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="400"></canvas>
+        
+        
+        <script>
+        var c = document.getElementById("canvas");
+var ctx = c.getContext("2d");
+$("#canvas").on("click",function(evt){
+	//console.log(evt);
+  drawCircle(evt.clientX,evt.clientY);
+ 
+});
+        
+        
+        function drawCircle(x,y){
+						ctx.clearRect(0,0,canvas.width,canvas.height);
+            var radius =Math.floor(Math.random()*50);
+            
+            var xpos = Math.floor(Math.random()*c.width);
+            var ypos = Math.floor(Math.random()*c.height);
+            
+            
+            ctx.beginPath();
+            ctx.arc(xpos,ypos,radius,0,2*Math.PI);
+            ctx.stroke();
+            requestAnimationFrame(drawCircle);
+        }
+        
+       requestAnimationFrame(drawCircle);
+        
+        </script>
+    </body>
+</html>

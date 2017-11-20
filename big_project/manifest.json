@@ -1,0 +1,30 @@
+{
+  "name": "The Asian Restaurant",
+  "short_name": "Asian Restaurant",
+  "icons": [{
+        "src": "./images/chinese_food.jpeg",
+        "type": "image/jpeg",
+        "sizes": "256x256"
+      }, {
+        "src": "./images/japanese_food.jpeg",
+        "type": "image/jpeg",
+        "sizes": "256x256"
+      }, {
+        "src": "./images/korean_food.jpeg",
+        "type": "image/jpeg",
+        "sizes": "256x256"
+      }, {
+        "src": "./images/thai_food.jpeg",
+        "type": "image/jpeg",
+        "sizes": "256x256"
+      },
+      {
+        "src": "./images/indian_food.jpeg",
+        "type": "image/jpeg",
+        "sizes": "256x256"
+      }],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#3E4EB8",
+  "theme_color": "#2F3BA2"
+}

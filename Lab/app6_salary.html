@@ -1,0 +1,60 @@
+
+
+<html>
+  <head>
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+ 
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ 
+ 
+    <script type="text/javascript">
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(getData);
+      function getData () {
+        $.get("https://data.cityofchicago.org/resource/tt4n-kn4t.json?$query=SELECT%20department,%20SUM(annual_salary)%20GROUP%20BY%20department ORDER BY SUM(annual_salary) DESC", 
+          function (response) {
+            //console.log(response);
+            drawChart(response)
+        });
+        
+        
+      }
+      
+      
+      
+      
+      
+      function drawChart(cityData) {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Department');
+        data.addColumn('number', 'Salary');
+        
+        $.each(cityData,function(i,v){
+            data.addRow([v.department,parseFloat(v.SUM_annual_salary)]);
+        })
+        
+        
+        // Set chart options
+        var options = {'title':'City Salaries by Department',
+                       'width':400,
+                       'height':300,
+                        sliceVisibilityThreshold: .01
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+  </body>
+</html>
