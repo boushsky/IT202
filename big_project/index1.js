@@ -54,9 +54,8 @@ function loadStops() {
 
 function getStopsByLine(ctaId, stops) {
   lineStops = [];
-  
   for (var i = 0; i < stops.length; i ++) {
-    if(stops[i][ctaId.toLowerCase()] == 'true') lineStops.push(stops[i]);
+    if(stops[i][ctaId.toLowerCase()] =='true') lineStops.push(stops[i]);
   }
   return lineStops;
 }
