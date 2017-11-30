@@ -60,20 +60,24 @@
           <select id="stop-select" class="form-control"></select>
         </div>
         
-        <p><a class="btn btn-primary btn-lg" href="#" role="button" id="btnsearch">Search &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button" id="btnsearch">Search &raquo;</a></p><br>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button" id="btnsearch2">Map Result &raquo;</a></p>
+
+
       </div>
 </div>
 <div id="screen2" class="container-fluid">
   <h1>Map version</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+  <p>Try to show the map version of train!</p>
+  <div id="map"></div>
+  
 </div>
   <div id="screen3" class="container-fluid">
     
     <h1>Detail Info</h1>
   
     <div id="results"></div>
-    
+    <div id="template" class="col-lg-3 col-sm-3">
     <div class="card" style="width: 20rem; text-black">
   <div class="card-block">
     <h2 class="card-title">Train </h2>
@@ -85,10 +89,15 @@
   </ul>
 
 </div>
-  
+</div>  
     
   </div>
 </div>
+
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWPNIhZ3r-IJP0fW-zMmqHhMOuoRirtf4callback=initMap">
+    </script>
 
 </body>
 </html>

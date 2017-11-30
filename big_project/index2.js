@@ -27,11 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
     request_url += '&mapid=' + $('#stop-select').val(); 
     var resultHeader = 'For train arrivals at ' + $('#stop-select option:selected').text();
     
-    $.getJSON(request_url, function (response) {
+    $.getJSON(request_url, function (data) {
       var resultsHtml = '<h4>' + resultHeader + '</h4><hr>';
- 
-      $.each(response.ctatt.eta,function(i,v){
-        //console.log(response.ctatt.eta[0]);
+      $(".result").html(data);
+      
+      $.each(data,function(i,v){
+        
         
         var clone = $("#card").clone();
                    clone.find(".card .card-body .card-title").text(v.rt+" line");
@@ -42,6 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
                    $("#card").append(clone);
         
       });
+      
+      
+      
+  $("#btnSearch2").on("click", initMap);
+      
       $("#results").html(resultsHtml + '<br>');
     });
   });
@@ -50,5 +56,41 @@ document.addEventListener('DOMContentLoaded', function() {
   $(document).on('click',function () {this.id})}, false);
 
 
+function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var request_url = base_url + '&key=' + api_key;
+        request_url += '&mapid=' + $('#stop-select').val();
+        $.get(request_url, function(response) {
+           
+           var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 9,
+              center: {lat: parseFloat(response[0].lat), lng: parseFloat(response[0].lon)}
+            });
+           
+           
+           $.each(response, function(i,v) {
+              
+              var contentString = "<h2>" + v.service_request_number
+                    + "</h2><br>" + v.street_address
+                    + "<br>" + v.status;
+              
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+      
+              var marker = new google.maps.Marker({
+                position: {lat: parseFloat(v.lat), lng: parseFloat(v.lon)},
+                map: map,
+                title: 'Uluru (Ayers Rock)'
+              });
+              
+              marker.addListener('click', function() {
+                infowindow.open(map, marker);
+              });             
+             
+           });
+        
+      });
 
+}
 
