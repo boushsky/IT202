@@ -32,14 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
       $(".result").html(data);
       
       $.each(data,function(i,v){
+        console.log(v);
+        $(".card .card-block .card-title").text(v.eta[0].rt+" line");
+        $(".card .list-group .stopDe").text(v.eta[0].stpDe);
+        $(".card .list-group .arrTime").text("Arrive at "+v.eta[0].arrT);
         
         
-        var clone = $("#card").clone();
-                   clone.find(".card .card-body .card-title").text(v.rt+" line");
-                   clone.find(".card .list-group .stopDe").text(v.stpDe);
-                   clone.find(".card .card-block .arrTime").text(v.arrT);
+        var clone = $("#template").clone();
+                   clone.find(".card .card-block .card-title").text(v.eta.rt+" line");
+                   clone.find(".card .list-group .stopDe").text(v.eta.stpDe);
+                   clone.find(".card .list-group  .list-group .arrTime").text(v.eta.arrT);
                    
-                   clone.attr("id",v.heading);
+                   clone.attr("id",v.eta.heading);
                    $("#card").append(clone);
         
       });
